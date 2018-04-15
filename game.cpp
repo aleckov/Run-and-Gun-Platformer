@@ -2,30 +2,39 @@
 #include <SFML/Graphics.hpp>
 #include <game.hpp>
 
-const int Game::mWindowWidth = 720;
-const int Game::mWindowHeight = 480;
-const float Game::mPlayerSpeed = 200.f;
+const int Game::mWindowWidth = 1280;
+const int Game::mWindowHeight = 720;
+const float Game::mPlayerSpeed = 120.f;
 const float Game::mFps = 60.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/mFps);
 
-Game::Game() : mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), "My Platformer"), mPlayerTexture(), mPlayer(), mIsJumping(false), mIsCrouching(false), mIsMovingLeft(false), mIsMovingRight(false)
+Game::Game() : mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), 
+			"My Platformer"), mPlayerTexture(), mPlayer(), 
+			mIsJumping(false), mIsCrouching(false), 
+			mIsMovingLeft(false), mIsMovingRight(false)
 {
-	//mWindow.setVerticalSyncEnabled();
-	if (!mPlayerTexture.loadFromFile("textures/player.png"))
-		mWindow.close();
-	mPlayer.setTexture(mPlayerTexture);
-	mPlayer.setPosition(500.f, 400.f);
+	sf::FloatRect screenArea(0, 0, 192, 108);
+	mWindow.setView(sf::View(screenArea));
+	
+	textures.loadAll();
+	mPlayer.setTexture(textures.getTexture("player"));
+	mPlayer.setPosition(50.f, 50.f);
+}
+
+Game::~Game()
+{
+	textures.destroy();
 }
 
 // the game loop, each iteration is a tick
 void Game::gameLoop()
 {
-	sf::Clock clock;
+	sf::Clock frameClock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	while (mWindow.isOpen())
 	{
 		handleEvents();
-		timeSinceLastUpdate += clock.restart();
+		timeSinceLastUpdate += frameClock.restart();
 		while (timeSinceLastUpdate > TimePerFrame)
 		{
 			timeSinceLastUpdate -= TimePerFrame;
@@ -41,6 +50,7 @@ void Game::handleEvents()
 	sf::Event event;
 	while (mWindow.pollEvent(event))
 	{
+		// check for specific events
 		switch (event.type)
 		{
 			// register key press
@@ -56,6 +66,10 @@ void Game::handleEvents()
 			case sf::Event::Closed:
 				mWindow.close();
 				break;
+
+			//case sf::Event::LostFocus:
+
+			//case sf::Event::GainedFocus:
 		}
 	}
 }

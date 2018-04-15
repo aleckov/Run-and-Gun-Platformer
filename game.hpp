@@ -1,11 +1,13 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include <resource_manager.hpp>
 
 class Game {
 	private:
 		sf::RenderWindow mWindow;
 		sf::Texture mPlayerTexture;
 		sf::Sprite mPlayer;
+		ResourceManager textures;
 		static const int mWindowWidth;
 		static const int mWindowHeight;
 		static const float mPlayerSpeed;
@@ -23,6 +25,7 @@ class Game {
 
 	public:
 		Game();
+		~Game();
 		void gameLoop();
 };
 
