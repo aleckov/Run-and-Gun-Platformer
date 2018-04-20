@@ -1,13 +1,13 @@
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <resource_manager.hpp>
+#include "SFML/Window.hpp"
+#include "SFML/Graphics.hpp"
+#include "resource_manager.hpp"
 
 class Game {
 	private:
 		sf::RenderWindow mWindow;
 		sf::Texture mPlayerTexture;
 		sf::Sprite mPlayer;
-		ResourceManager textures;
+		ResourceManager assets;
 		static const int mWindowWidth;
 		static const int mWindowHeight;
 		static const float mPlayerSpeed;
@@ -15,8 +15,6 @@ class Game {
 		static const sf::Time TimePerFrame;
 		bool mIsMovingLeft;
 		bool mIsMovingRight;
-		bool mIsJumping;
-		bool mIsCrouching;
 
 		void handleEvents();
 		void update(sf::Time dt);

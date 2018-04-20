@@ -9,7 +9,7 @@ class ResourceManager {
 		ResourceManager() {};
 		~ResourceManager() {};
 		void loadAll();
-		void destroy();
+		void deleteAll();
 		void loadTexture(std::string name, std::string filename);
 		sf::Texture& getTexture(std::string name);
 };

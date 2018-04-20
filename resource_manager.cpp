@@ -1,15 +1,15 @@
 #include <SFML/Graphics.hpp>
-#include "resource_manager.hpp"
 #include <iostream>
 #include <string>
 #include <map>
+#include "resource_manager.hpp"
 
 void ResourceManager::loadAll()
 {
-	loadTexture("player", "player.png");
+	loadTexture("player", "flame.png");
 }
 
-void ResourceManager::destroy()
+void ResourceManager::deleteAll()
 {
 	std::map <std::string, sf::Texture*>::iterator t;
 	for (t = mTextureCache.begin(); t != mTextureCache.end(); t++)

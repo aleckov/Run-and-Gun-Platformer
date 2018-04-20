@@ -1,29 +1,29 @@
-#include <SFML/Window.hpp>
-#include <SFML/Graphics.hpp>
-#include <game.hpp>
+#include "SFML/Window.hpp"
+#include "SFML/Graphics.hpp"
+#include "game.hpp"
 
-const int Game::mWindowWidth = 1280;
-const int Game::mWindowHeight = 720;
-const float Game::mPlayerSpeed = 120.f;
+const int Game::mWindowWidth = 720;
+const int Game::mWindowHeight = 1080;
+const float Game::mPlayerSpeed = 100.f;
 const float Game::mFps = 60.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/mFps);
 
 Game::Game() : mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), 
-			"My Platformer"), mPlayerTexture(), mPlayer(), 
-			mIsJumping(false), mIsCrouching(false), 
+			"2D Catch"), mPlayerTexture(), mPlayer(),  
 			mIsMovingLeft(false), mIsMovingRight(false)
 {
-	sf::FloatRect screenArea(0, 0, 192, 108);
+	sf::FloatRect screenArea(0, 0, 144, 216);
 	mWindow.setView(sf::View(screenArea));
-	
-	textures.loadAll();
-	mPlayer.setTexture(textures.getTexture("player"));
-	mPlayer.setPosition(50.f, 50.f);
+	mWindow.setVerticalSyncEnabled(true);
+
+	assets.loadAll();
+	mPlayer.setTexture(assets.getTexture("player"));
+	mPlayer.setPosition(10.f, 185.f);
 }
 
 Game::~Game()
 {
-	textures.destroy();
+	assets.deleteAll();
 }
 
 // the game loop, each iteration is a tick
@@ -78,10 +78,6 @@ void Game::handleEvents()
 void Game::update(sf::Time dt)
 {
 	sf::Vector2f velocity(0.f, 0.f);
-	if (mIsJumping)
-		velocity.y -= mPlayerSpeed;
-	if (mIsCrouching) 
-		velocity.y += mPlayerSpeed;
 	if (mIsMovingLeft) 
 		velocity.x -= mPlayerSpeed;
 	if (mIsMovingRight)
@@ -101,11 +97,7 @@ void Game::render()
 // translate key press/release into game action
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-	if (key == sf::Keyboard::W)
-		mIsJumping = isPressed;
-	else if (key == sf::Keyboard::S)
-		mIsCrouching = isPressed;
-	else if (key == sf::Keyboard::A)
+	if (key == sf::Keyboard::A)
 		mIsMovingLeft = isPressed;
 	else if (key == sf::Keyboard::D)
 		mIsMovingRight = isPressed;
