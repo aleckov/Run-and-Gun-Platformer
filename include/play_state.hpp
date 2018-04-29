@@ -2,6 +2,7 @@
 #include <string>
 #include "SFML/Window.hpp"
 #include "state_machine.hpp"
+#include "game_over_state.hpp"
 
 class PlayState : public State {
 	private:

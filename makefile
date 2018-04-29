@@ -4,8 +4,8 @@ CC = g++
 CFLAGS = -I. -std=c++11
 
 # This will create your final output using .o compiled files
-make: main.o game.o resource_manager.o state_machine.o main_menu_state.o play_state.o
-	$(CC) $(CFLAGS) -o main main.o game.o resource_manager.o state_machine.o main_menu_state.o play_state.o $(LIBS)
+make: main.o game.o resource_manager.o state_machine.o main_menu_state.o play_state.o game_over_state.o
+	$(CC) $(CFLAGS) -o main main.o game.o resource_manager.o state_machine.o main_menu_state.o play_state.o game_over_state.o $(LIBS)
 
 main.o: main.cpp include/game.hpp
 	$(CC) $(CFLAGS) -c main.cpp -o main.o
@@ -24,6 +24,9 @@ main_menu_state.o: main_menu_state.cpp include/main_menu_state.hpp
 
 play_state.o: play_state.cpp include/play_state.hpp
 	$(CC) $(CFLAGS) -c play_state.cpp -o play_state.o
+
+game_over_state.o: game_over_state.cpp include/game_over_state.hpp
+	$(CC) $(CFLAGS) -c game_over_state.cpp -o game_over_state.o
 
 # This will clean or remove compiled files so you can start fresh
 clean:

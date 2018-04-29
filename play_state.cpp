@@ -59,6 +59,12 @@ void PlayState::handleInput(sf::Keyboard::Key key, bool isPressed)
                 mIsMovingRight = isPressed;
         else if (key == sf::Keyboard::Escape)
                 mStateMachine.close();
+        else if (key == sf::Keyboard::G)
+        {
+                GameState newGameOverState(new GameOverState(mStateMachine, mWindow, mAssets));
+                mStateMachine.changeState(std::move(newGameOverState));
+        }
+
 }
 
 // updates the game logic
