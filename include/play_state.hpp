@@ -3,12 +3,17 @@
 #include "SFML/Window.hpp"
 #include "state_machine.hpp"
 #include "game_over_state.hpp"
+#include "entity_manager.hpp"
+#include "entity.hpp"
 
 class PlayState : public State {
 	private:
-		sf::Texture mPlayerTexture;
 		sf::Sprite mPlayer;
 		sf::Text mScore;
+		sf::RectangleShape mLeftBound;
+		sf::RectangleShape mRightBound;
+		EntityManager mEntityManager;
+		sf::Time mTotalElapsedTime;
 		int mPlayerScore;
 		static std::string mScoreText;
 		static const float mPlayerSpeed;

@@ -1,6 +1,7 @@
 #include "include/state_machine.hpp"
+#include <iostream>
 
-StateMachine::StateMachine() : mRunning(true) { }
+StateMachine::StateMachine() : mRunning(true), mChangeFlag(false) { }
 
 StateMachine::~StateMachine()
 {
@@ -18,11 +19,16 @@ void StateMachine::popState() { mStateStack.pop(); }
 
 GameState& StateMachine::getCurrentState() { return mStateStack.top(); }
 
+void StateMachine::changeStateFlag() { mChangeFlag = true; }
+
+bool StateMachine::checkFlag() { return mChangeFlag; }
+
 void StateMachine::changeState(GameState state)
 {
 	if (!mStateStack.empty())
 		popState();
 	pushState(std::move(state));
+	mChangeFlag = false;
 }
 
 void StateMachine::handleEvents() { mStateStack.top()->handleEvents(); }

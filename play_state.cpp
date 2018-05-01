@@ -1,25 +1,35 @@
 #include <string>
 #include "include/play_state.hpp"
 
-const float PlayState::mPlayerSpeed = 100.f;
+const float PlayState::mPlayerSpeed = 100.f; //
 
 PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window, 
 			ResourceManager& assets) : 
-			State(machine, window, assets), mPlayerTexture(), 
-			mPlayer(), mIsMovingLeft(false), mIsMovingRight(false)
+			State(machine, window, assets), 
+			mEntityManager(mWindow, mAssets), mPlayer(), 
+			mIsMovingLeft(false), mIsMovingRight(false)
 {
-	mPlayer.setTexture(mAssets.getTexture("player"));
+	mPlayer.setTexture(mAssets.getTexture("player")); //
 	mPlayer.setPosition(10.f, 155.f);
+
+	mLeftBound.setSize(sf::Vector2f(1.0, 180.0));
+	mLeftBound.setPosition(0, 0);
+	mRightBound.setSize(sf::Vector2f(1.0, 180.0));
+	mRightBound.setPosition(119, 0);
 
 	int mPlayerScore = 0;
 	std::string mScoreText = "Score " + std::to_string(mPlayerScore);
-
 	mScore.setFont(mAssets.getFont("scoreFont"));
 	mScore.setCharacterSize(40);
 	mScore.setString(mScoreText);
 	mScore.setColor(sf::Color::White);
 	mScore.scale(0.2f, 0.2f);
 	mScore.setPosition(2, 2);
+
+	mEntityManager.addEntity("water", "water", 50.0f, 100.0f);
+	mEntityManager.addEntity("fire", "fire", 80.0f, 50.0f);
+
+	mTotalElapsedTime = sf::Time::Zero;
 }
 
 PlayState::~PlayState() { };
@@ -60,16 +70,21 @@ void PlayState::handleInput(sf::Keyboard::Key key, bool isPressed)
         else if (key == sf::Keyboard::Escape)
                 mStateMachine.close();
         else if (key == sf::Keyboard::G)
-        {
-                GameState newGameOverState(new GameOverState(mStateMachine, mWindow, mAssets));
-                mStateMachine.changeState(std::move(newGameOverState));
-        }
+	{
+		mStateMachine.changeStateFlag();
+	}
 
 }
 
 // updates the game logic
 void PlayState::update(const sf::Time& dt)
 {
+	mTotalElapsedTime += dt;
+	if (mTotalElapsedTime > sf::seconds(3.0f))
+		mEntityManager.addEntity("water", "water", 25.0f, 20.0f);
+
+	mEntityManager.update(dt);
+	// move the player
 	sf::Vector2f velocity(0.f, 0.f);
 	if (mIsMovingLeft)
 		velocity.x -= mPlayerSpeed;
@@ -77,6 +92,11 @@ void PlayState::update(const sf::Time& dt)
 		velocity.x += mPlayerSpeed;
 
 	mPlayer.move(velocity * dt.asSeconds());
+
+	// if player enters bounds, move him back
+	if (mPlayer.getGlobalBounds().intersects(mLeftBound.getGlobalBounds()) 
+	|| mPlayer.getGlobalBounds().intersects(mRightBound.getGlobalBounds()))
+		mPlayer.move(-velocity * dt.asSeconds());
 }
 
 // renders the game to the screen
@@ -84,6 +104,14 @@ void PlayState::render()
 {
 	mWindow.clear();
 	mWindow.draw(mPlayer);
+	mEntityManager.render();
 	mWindow.draw(mScore);
 	mWindow.display();
+        if (mStateMachine.checkFlag())
+        {
+                GameState newGameOverState(new GameOverState(mStateMachine, mWindow, mAssets));
+                mStateMachine.changeState(std::move(newGameOverState));
+
+        }
+
 }

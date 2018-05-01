@@ -9,6 +9,8 @@ void ResourceManager::loadAll()
 	loadTexture("player", "flame.png");
 	loadTexture("title", "stoke.png");
 	loadTexture("menuImage", "menu_image.png");
+	loadTexture("droplet", "droplet.png");
+	loadTexture("matches", "matches.png");
 	loadFont("scoreFont", "joystix_monospace.ttf");
 }
 

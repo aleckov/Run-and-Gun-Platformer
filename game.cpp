@@ -5,7 +5,7 @@ const int Game::mWindowHeight = 900;
 const float Game::mFps = 60.f;
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/mFps);
 
-Game::Game() : mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), "2D Catch", sf::Style::Titlebar | sf::Style::Close)
+Game::Game() : mWindow(sf::VideoMode(mWindowWidth, mWindowHeight), "Stoke", sf::Style::Titlebar | sf::Style::Close)
 {
 	// low res graphics in a high res window
 	sf::FloatRect screenArea(0, 0, 120, 180);

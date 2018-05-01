@@ -1,7 +1,6 @@
 #include "include/main_menu_state.hpp"
 
-MainMenuState::MainMenuState(StateMachine& machine, sf::RenderWindow& window, ResourceManager& assets) : 
-			State(machine, window, assets)
+MainMenuState::MainMenuState(StateMachine& machine, sf::RenderWindow& window, ResourceManager& assets) : State(machine, window, assets)
 {
 	mTitle.setTexture(mAssets.getTexture("title"));
 	mTitle.setScale(0.25, 0.25);
