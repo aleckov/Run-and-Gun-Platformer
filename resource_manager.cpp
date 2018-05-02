@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "include/SFML/Graphics.hpp"
+#include "SFML/Graphics.hpp"
 #include "include/resource_manager.hpp"
 
 void ResourceManager::loadAll()

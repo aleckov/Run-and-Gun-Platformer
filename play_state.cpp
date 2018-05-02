@@ -1,19 +1,32 @@
 #include <string>
 #include "include/play_state.hpp"
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 const float PlayState::mPlayerSpeed = 100.f;
+const float ballSpeed = 100.f;
+const float ballRadius = 5.f;
+const float epsilon = 10.f;
+sf::CircleShape ball;
 
 PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window, 
 			ResourceManager& assets) : 
 			State(machine, window, assets), mPlayerTexture(), 
-			mPlayer(), mIsMovingLeft(false), mIsMovingRight(false)
+			mPlayer(), mIsMovingLeft(false), mIsMovingRight(false)//, ball()
 {
+	std::srand(static_cast<unsigned int>(std::time(NULL)));
+	float ballXcoordinate = rand() % 121;
+	// Create the ball
+	ball.setRadius(ballRadius);// - 3);
+	ball.setFillColor(sf::Color::White);
+	ball.setOrigin(ballRadius / 2, ballRadius / 2);
+	ball.setPosition(ballXcoordinate,10.f);
+	
 	mPlayer.setTexture(mAssets.getTexture("player"));
 	mPlayer.setPosition(10.f, 155.f);
-
-	int mPlayerScore = 0;
+	printf("%d\n", mPlayerScore);
 	std::string mScoreText = "Score " + std::to_string(mPlayerScore);
-
 	mScore.setFont(mAssets.getFont("scoreFont"));
 	mScore.setCharacterSize(40);
 	mScore.setString(mScoreText);
@@ -75,8 +88,37 @@ void PlayState::update(const sf::Time& dt)
 		velocity.x -= mPlayerSpeed;
 	if (mIsMovingRight)
 		velocity.x += mPlayerSpeed;
+	mPlayer.move(velocity * dt.asSeconds());	
+	balls(dt);
+}
 
-	mPlayer.move(velocity * dt.asSeconds());
+void PlayState::balls(const sf::Time& dt)
+{
+	sf::Vector2f ballVelocity(0.f, ballSpeed);
+	ball.move(ballVelocity * dt.asSeconds());
+	float distance = pow(ball.getPosition().x - mPlayer.getPosition().x,2) + pow(ball.getPosition().y - mPlayer.getPosition().y,2);
+	if (ball.getPosition().y > 180.f) {
+		ball.setPosition(rand()%121,0.f);
+		--mPlayerScore;
+		printf("%d\n", mPlayerScore);
+		std::string mScoreText = "Score " + std::to_string(mPlayerScore);
+		mScore.setFont(mAssets.getFont("scoreFont"));
+		mScore.setCharacterSize(40);
+		mScore.setString(mScoreText);
+		mScore.setColor(sf::Color::White);
+		mScore.setPosition(2, 2);
+	}
+	if (distance < epsilon) {
+		ball.setPosition(rand()%121,0.f);
+		++mPlayerScore;
+		printf("%d\n",mPlayerScore);
+		std::string mScoreText = "Score " + std::to_string(mPlayerScore);
+		mScore.setFont(mAssets.getFont("scoreFont"));
+		mScore.setCharacterSize(40);
+		mScore.setString(mScoreText);
+		mScore.setColor(sf::Color::White);
+		mScore.setPosition(2, 2);
+	}
 }
 
 // renders the game to the screen
@@ -85,5 +127,6 @@ void PlayState::render()
 	mWindow.clear();
 	mWindow.draw(mPlayer);
 	mWindow.draw(mScore);
+	mWindow.draw(ball);
 	mWindow.display();
 }

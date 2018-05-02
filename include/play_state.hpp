@@ -9,7 +9,7 @@ class PlayState : public State {
 		sf::Texture mPlayerTexture;
 		sf::Sprite mPlayer;
 		sf::Text mScore;
-		int mPlayerScore;
+		int mPlayerScore = 0;
 		static std::string mScoreText;
 		static const float mPlayerSpeed;
 		bool mIsMovingLeft;
@@ -21,4 +21,5 @@ class PlayState : public State {
 		void handleInput(sf::Keyboard::Key key, bool isPressed);
 		void update(const sf::Time& dt);
 		void render();
+		void balls(const sf::Time& dt);
 };
