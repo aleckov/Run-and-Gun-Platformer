@@ -1,5 +1,4 @@
 #include "include/state_machine.hpp"
-#include <iostream>
 
 StateMachine::StateMachine() : mRunning(true), mChangeFlag(false) { }
 
@@ -23,6 +22,7 @@ void StateMachine::changeStateFlag() { mChangeFlag = true; }
 
 bool StateMachine::checkFlag() { return mChangeFlag; }
 
+// only called if mChangeFlag is set to true
 void StateMachine::changeState(GameState state)
 {
 	if (!mStateStack.empty())
@@ -36,3 +36,5 @@ void StateMachine::handleEvents() { mStateStack.top()->handleEvents(); }
 void StateMachine::update(sf::Time dt) { mStateStack.top()->update(dt); }
 
 void StateMachine::render() { mStateStack.top()->render(); }
+
+void StateMachine::updateStateMachine() { mStateStack.top()->updateStateMachine(); }

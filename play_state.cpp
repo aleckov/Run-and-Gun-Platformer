@@ -70,10 +70,7 @@ void PlayState::handleInput(sf::Keyboard::Key key, bool isPressed)
         else if (key == sf::Keyboard::Escape)
                 mStateMachine.close();
         else if (key == sf::Keyboard::G)
-	{
 		mStateMachine.changeStateFlag();
-	}
-
 }
 
 // updates the game logic
@@ -107,11 +104,13 @@ void PlayState::render()
 	mEntityManager.render();
 	mWindow.draw(mScore);
 	mWindow.display();
-        if (mStateMachine.checkFlag())
-        {
-                GameState newGameOverState(new GameOverState(mStateMachine, mWindow, mAssets));
-                mStateMachine.changeState(std::move(newGameOverState));
+}
 
-        }
-
+void PlayState::updateStateMachine()
+{
+	if (mStateMachine.checkFlag())
+	{
+		GameState newGameOverState(new GameOverState(mStateMachine, mWindow, mAssets));
+		mStateMachine.changeState(std::move(newGameOverState));
+	}
 }

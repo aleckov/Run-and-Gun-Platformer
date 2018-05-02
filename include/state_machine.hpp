@@ -24,4 +24,5 @@ class StateMachine {
 		void handleEvents();
 		void update(sf::Time dt);
 		void render();
+		void updateStateMachine();
 };

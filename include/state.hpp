@@ -17,4 +17,5 @@ class State {
 		virtual void handleInput(sf::Keyboard::Key key, bool isPressed) = 0;
 		virtual void update(const sf::Time& dt) = 0;
 		virtual void render() = 0;
+		virtual void updateStateMachine() = 0;
 };

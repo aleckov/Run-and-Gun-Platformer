@@ -15,4 +15,5 @@ class MainMenuState : public State {
 		void handleInput(sf::Keyboard::Key key, bool isPressed);
 		void update(const sf::Time& dt);
 		void render();
+		void updateStateMachine();
 };

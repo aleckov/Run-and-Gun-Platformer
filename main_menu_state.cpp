@@ -49,10 +49,7 @@ void MainMenuState::handleEvents()
 void MainMenuState::handleInput(sf::Keyboard::Key key, bool isPressed)
 {
 	if (key == sf::Keyboard::Return)
-	{
-		GameState newPlayState(new PlayState(mStateMachine, mWindow, mAssets));
-		mStateMachine.changeState(std::move(newPlayState));
-	}
+		mStateMachine.changeStateFlag();
 	else if (key == sf::Keyboard::Escape)
 		mStateMachine.close();
 }
@@ -66,4 +63,14 @@ void MainMenuState::render()
 	mWindow.draw(mImage);
 	mWindow.draw(mPlayPrompt);
 	mWindow.display();
+}
+
+void MainMenuState::updateStateMachine()
+{
+	if (mStateMachine.checkFlag())
+	{
+		GameState newPlayState(new PlayState(mStateMachine, mWindow, mAssets));
+		mStateMachine.changeState(std::move(newPlayState));
+
+	}
 }

@@ -38,5 +38,6 @@ void Game::run()
 			mStateMachine.update(TimePerFrame);
 		}
 		mStateMachine.render();
+		mStateMachine.updateStateMachine();
 	}		
 }

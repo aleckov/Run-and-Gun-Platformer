@@ -54,10 +54,7 @@ void GameOverState::handleEvents()
 void GameOverState::handleInput(sf::Keyboard::Key key, bool isPressed)
 {
 	if (key == sf::Keyboard::Return)
-	{
-		GameState newPlayState(new PlayState(mStateMachine, mWindow, mAssets));
-		mStateMachine.changeState(std::move(newPlayState));
-	}
+		mStateMachine.changeStateFlag();
 	else if (key == sf::Keyboard::Escape)
 		mStateMachine.close();
 }
@@ -73,3 +70,11 @@ void GameOverState::render()
 	mWindow.display();
 }
 
+void GameOverState::updateStateMachine()
+{
+	if (mStateMachine.checkFlag())
+	{
+		GameState newPlayState(new PlayState(mStateMachine, mWindow, mAssets));
+		mStateMachine.changeState(std::move(newPlayState));
+	}
+}
