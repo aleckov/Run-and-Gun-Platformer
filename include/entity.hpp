@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "SFML/Graphics.hpp"
 
 class Entity {
@@ -14,10 +15,10 @@ class Entity {
 		void setTexture(sf::Texture& texture);
 		void update(const sf::Time& dt);
 		void destroy();
-		//virtual void collision(Entity& entity);
 		void setVelocity(float velx, float vely);
 		void setPosition(float posx, float posy);
 		bool isActive();
-		bool collidedWith(Entity& entity);
+		bool collidedWith(sf::Sprite& sprite);
 		sf::Sprite getSprite();
+		std::string getType();
 };

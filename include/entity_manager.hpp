@@ -19,4 +19,5 @@ class EntityManager {
 		Entity& getEntity(const std::string& name);
 		void update(const sf::Time& dt);
 		void render();
+		int checkCollision(sf::Sprite& player);
 };

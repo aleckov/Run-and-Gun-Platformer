@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <string>
 #include "SFML/Window.hpp"
 #include "state_machine.hpp"
@@ -10,11 +11,14 @@ class PlayState : public State {
 	private:
 		sf::Sprite mPlayer;
 		sf::Text mScore;
+		sf::Text mTime;
 		sf::RectangleShape mLeftBound;
 		sf::RectangleShape mRightBound;
 		EntityManager mEntityManager;
+		sf::Clock mGameClock;
 		sf::Time mTotalElapsedTime;
 		int mPlayerScore;
+		int mEntityIndex;
 		static std::string mScoreText;
 		static const float mPlayerSpeed;
 		bool mIsMovingLeft;
@@ -27,4 +31,7 @@ class PlayState : public State {
 		void update(const sf::Time& dt);
 		void render();
 		void updateStateMachine();
+		void renderScore();
+		void renderTime();
+		void generateEntity();
 };

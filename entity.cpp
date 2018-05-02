@@ -1,9 +1,6 @@
 #include "include/entity.hpp"
 
-Entity::Entity(std::string type) : mActive(true)
-{
-	mType = type;
-}
+Entity::Entity(std::string type) : mActive(true) { this->mType = type; }
 
 Entity::~Entity() { }
 
@@ -18,18 +15,7 @@ void Entity::update(const sf::Time& dt)
 	mSprite.move(mVelocity * dt.asSeconds());
 }
 
-void Entity::destroy()
-{
-	mActive = false;
-}
-
-/*
-virtual void Entity::collision(Entity& entity)
-{
-	destroy();
-	entity.destroy();
-}
-*/
+void Entity::destroy() { mActive = false; }
 
 void Entity::setVelocity(float velx, float vely)
 {
@@ -42,17 +28,13 @@ void Entity::setPosition(float posx, float posy)
 	mSprite.setPosition(posx, posy);
 }
 
-bool Entity::isActive()
+bool Entity::isActive() { return mActive; }
+
+bool Entity::collidedWith(sf::Sprite& sprite)
 {
-	return mActive;
+	return mSprite.getGlobalBounds().intersects(sprite.getGlobalBounds());
 }
 
-bool Entity::collidedWith(Entity& entity)
-{
-	return mSprite.getGlobalBounds().intersects(entity.getSprite().getGlobalBounds());
-}
+sf::Sprite Entity::getSprite() { return mSprite; }
 
-sf::Sprite Entity::getSprite()
-{
-	return mSprite;
-}
+std::string Entity::getType() { return mType; }

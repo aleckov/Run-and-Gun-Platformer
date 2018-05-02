@@ -15,7 +15,7 @@ void EntityManager::addEntity(const std::string& type, const std::string& name, 
 		entity->setTexture(mAssets.getTexture("droplet"));
 	else if (type == "fire")
 		entity->setTexture(mAssets.getTexture("matches"));
-	entity->setPosition(posx, 0.0f);
+	entity->setPosition(posx, -10.0f);
 	entity->setVelocity(0.0f, vely);
 	mEntityMap.insert(std::make_pair(name, entity));
 }
@@ -45,4 +45,24 @@ void EntityManager::render()
 {
 	for (auto it = mEntityMap.begin(); it != mEntityMap.end(); ++it)
 		mWindow.draw(it->second->getSprite());
+}
+
+int EntityManager::checkCollision(sf::Sprite& player)
+{
+	int score = 0;
+
+	for (auto it = mEntityMap.begin(); it != mEntityMap.end(); ++it)
+	{
+		if (it->second->collidedWith(player))
+		{
+			if (it->second->getType() == "fire")
+				score += 100;
+			else if (it->second->getType() == "water")
+				score -= 10000;
+			it->second->destroy();
+			removeEntity(it->first);
+		}
+	}
+
+	return score;
 }
