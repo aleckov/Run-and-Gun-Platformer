@@ -16,6 +16,8 @@ class PlayState : public State {
 		sf::RectangleShape mRightBound;
 		EntityManager mEntityManager;
 		sf::Clock mGameClock;
+		sf::Clock mFireClock;
+		sf::Clock mEntityClock;	
 		sf::Time mTotalElapsedTime;
 		int mPlayerScore;
 		int mEntityIndex;

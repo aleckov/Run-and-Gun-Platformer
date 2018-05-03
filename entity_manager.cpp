@@ -55,8 +55,11 @@ int EntityManager::checkCollision(sf::Sprite& player)
 	{
 		if (it->second->collidedWith(player))
 		{
-			if (it->second->getType() == "fire")
+			if (it->second->getType() == "fire") {
 				score += 100;
+				/* addEntity("water", "water", rand()%101+10, 100.0f);
+				addEntity("fire", "fire", rand()%101+10, 50.0f); */
+			}
 			else if (it->second->getType() == "water")
 				score -= 10000;
 			it->second->destroy();
