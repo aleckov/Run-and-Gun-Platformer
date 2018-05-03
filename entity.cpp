@@ -28,6 +28,11 @@ void Entity::setPosition(float posx, float posy)
 	mSprite.setPosition(posx, posy);
 }
 
+float Entity::getPosition()
+{
+	return mSprite.getPosition().y;
+}
+
 bool Entity::isActive() { return mActive; }
 
 bool Entity::collidedWith(sf::Sprite& sprite)

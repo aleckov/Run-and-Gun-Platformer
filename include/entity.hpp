@@ -17,6 +17,7 @@ class Entity {
 		void destroy();
 		void setVelocity(float velx, float vely);
 		void setPosition(float posx, float posy);
+		float getPosition();
 		bool isActive();
 		bool collidedWith(sf::Sprite& sprite);
 		sf::Sprite getSprite();
