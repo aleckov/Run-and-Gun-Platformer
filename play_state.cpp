@@ -9,6 +9,8 @@ PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window,
 			mIsMovingLeft(false), mIsMovingRight(false),
 			mPlayerScore(0), mEntityIndex(0)
 {
+	std::srand(static_cast<unsigned int>(std::time(NULL)));
+	
 	mPlayer.setTexture(mAssets.getTexture("player"));
 	mPlayer.setScale(0.5f, 0.5f);
 	mPlayer.setPosition(10.f, 156.f);
@@ -35,13 +37,13 @@ PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window,
 	mTime.scale(0.2f, 0.2f);
 	mTime.setPosition(90, 2);
 
-	mEntityManager.addEntity("water", "water", 50.0f, 100.0f);
-	mEntityManager.addEntity("fire", "fire", 80.0f, 50.0f);
+	mEntityManager.addEntity("water", "water", rand()%101 + 10, 100.0f);
+	mEntityManager.addEntity("fire", "fire", rand()%101 +10, 50.0f);
 
 	mTotalElapsedTime = sf::Time::Zero;
 }
 
-PlayState::~PlayState() { };
+PlayState::~PlayState() { }
 
 void PlayState::handleEvents()
 {
@@ -86,14 +88,27 @@ void PlayState::handleInput(sf::Keyboard::Key key, bool isPressed)
 void PlayState::update(const sf::Time& dt)
 {
 	// continuously spawn an entity
-	if (mGameClock.getElapsedTime().asSeconds() > 15.0f)
+	if (mEntityClock.getElapsedTime().asSeconds() > 0.75f)
 	{
+		float waterSpeed = (rand()%5+10)*10.0f;
 		std::string tempIndex = std::to_string(mEntityIndex);
-		mEntityManager.addEntity("water", tempIndex, 50.0f, 100.0f);
-		mGameClock.restart();
+		mEntityManager.addEntity("water", tempIndex, rand()%101+10, waterSpeed);
+		mEntityClock.restart();
 		++mEntityIndex;
 	}
-
+	if (mFireClock.getElapsedTime().asSeconds() > rand()%4 + 1.0f)
+	{
+		float fireSpeed = (rand()%5+5)*10.0f;
+		std::string tempIndex = std::to_string(mEntityIndex);
+		mEntityManager.addEntity("fire", tempIndex, rand()%101+10, fireSpeed);
+		mFireClock.restart();
+		++mEntityIndex;
+	} 
+	/*if (mEntityClock.getElapsedTime().asSeconds() > 5.0f);
+	{
+		printf("five seconds\n");
+		mEntityClock.restart();
+	}*/
 	// gain score if a 'fire' object is caught
 	// game over if a 'water' object hits the player
 	int tempScore;

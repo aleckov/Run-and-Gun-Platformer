@@ -1,7 +1,7 @@
 # Definitions for constants
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 CC = g++
-CFLAGS = -I. -std=c++11 -g
+CFLAGS = -I/home/Grattan/SFML-2.4.2/include -std=c++11 -g -L/home/Grattan/SFML-2.4.2/lib
 
 # This will create your final output using .o compiled files
 make: main.o game.o resource_manager.o state_machine.o main_menu_state.o play_state.o game_over_state.o entity.o entity_manager.o
