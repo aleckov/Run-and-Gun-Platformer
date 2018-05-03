@@ -13,7 +13,6 @@ PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window,
 	
 	mBackground.setTexture(mAssets.getTexture("background"));
 	mBackground.setPosition(0.0f,0.0f);
-	mBackground.setScale(0.2f, 0.2f);
 	
 	mPlayer.setTexture(mAssets.getTexture("player"));
 	mPlayer.setScale(0.5f, 0.5f);
