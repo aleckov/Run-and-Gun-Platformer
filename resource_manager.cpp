@@ -11,6 +11,7 @@ void ResourceManager::loadAll()
 	loadTexture("menuImage", "menu_image.png");
 	loadTexture("droplet", "droplet.png");
 	loadTexture("matches", "matches.png");
+	loadTexture("background", "background.png"); 
 	loadFont("scoreFont", "joystix_monospace.ttf");
 }
 

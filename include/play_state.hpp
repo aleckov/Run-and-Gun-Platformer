@@ -10,6 +10,7 @@
 class PlayState : public State {
 	private:
 		sf::Sprite mPlayer;
+		sf::Sprite mBackground;
 		sf::Text mScore;
 		sf::Text mTime;
 		sf::RectangleShape mLeftBound;

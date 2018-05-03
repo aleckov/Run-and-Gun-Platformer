@@ -5,11 +5,15 @@ const float PlayState::mPlayerSpeed = 100.f;
 PlayState::PlayState(StateMachine& machine, sf::RenderWindow& window, 
 			ResourceManager& assets) : 
 			State(machine, window, assets), 
-			mEntityManager(mWindow, mAssets), mPlayer(), 
+			mEntityManager(mWindow, mAssets), mBackground(), mPlayer(), 
 			mIsMovingLeft(false), mIsMovingRight(false),
 			mPlayerScore(0), mEntityIndex(0)
 {
 	std::srand(static_cast<unsigned int>(std::time(NULL)));
+	
+	mBackground.setTexture(mAssets.getTexture("background"));
+	mBackground.setPosition(0.0f,0.0f);
+	mBackground.setScale(0.2f, 0.2f);
 	
 	mPlayer.setTexture(mAssets.getTexture("player"));
 	mPlayer.setScale(0.5f, 0.5f);
@@ -136,6 +140,7 @@ void PlayState::update(const sf::Time& dt)
 void PlayState::render()
 {
 	mWindow.clear();
+	mWindow.draw(mBackground);
 	mWindow.draw(mPlayer);
 	mEntityManager.render();
 	renderScore();
