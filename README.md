@@ -10,6 +10,6 @@ Compilation on a Windows machine might require the use of the MinGW software. If
 
 The following were used to help us develop good practices in working with the SFML libraries and in game development in general:
 
-"SFML Game Development" by Moreira, Hansson, and Haller
-[Documentation of SFML 2.4.2](https://www.sfml-dev.org/documentation/2.4.2/)
+"SFML Game Development" by Moreira, Hansson, and Haller<br/>
+[Documentation of SFML 2.4.2](https://www.sfml-dev.org/documentation/2.4.2/)<br/>
 [SFML community forums](https://en.sfml-dev.org/forums/index.php)
