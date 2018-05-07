@@ -38,6 +38,11 @@ void EntityManager::update(const sf::Time& dt)
 			it->second->update(dt);
 		else
 			removeEntity(it->first);
+		if (it->second->getPosition() > 200.0f)
+		{
+			it->second->destroy();
+			removeEntity(it->first);
+		}
 	}
 }
 
