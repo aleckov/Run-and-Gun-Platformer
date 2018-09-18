@@ -2,9 +2,9 @@
 
 ## Compilation Instructions
 
-To build the game, download SFML 2.4.2 for your OS from the [official SFML website](https://www.sfml-dev.org/download.php). Place the SFML/ folder with all the .hpp files into include/. Compile the program by entering "make" into the terminal.
+Install SFML on your system by following the instructions on the [official SFML website](https://www.sfml-dev.org/tutorials/2.5/start-linux.php#installing-sfml).
 
-Compilation on a Windows machine might require the use of the MinGW software. If you are using MinGW, copy the .dll files from  SFML-2.4.2/bin to C:\MinGW\bin. You must also edit the makefile to include the path to where you installed SFML.
+Compile the program by entering "make" into the terminal.
 
 ## Acknowledgements
 
